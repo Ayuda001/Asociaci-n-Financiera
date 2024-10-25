@@ -112,7 +112,30 @@
             <button type="submit" class="btn">Enviar solicitud</button>
         </form>
     </div>
-    <script src="loan-simulator.js"></script>
+    <script>
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirection vers la page waiting.html
+                    window.location.href = 'waiting.html';
+                } else {
+                    alert('Une erreur s\'est produite, veuillez réessayer.');
+                }
+            })
+            .catch(error => {
+                alert('Une erreur s\'est produite, veuillez réessayer.');
+            });
+        });
+    </script>
 </body>
 
 </html>
