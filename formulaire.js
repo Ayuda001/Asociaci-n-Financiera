@@ -34,7 +34,7 @@ function validateFiles(files, maxSize = 5 * 1024 * 1024) { // 5MB max
     return true;
 }
 
-// Gestión de las zonas de carga
+// Gestion de las zonas de carga
 const uploadZones = document.querySelectorAll('.upload-zone');
 uploadZones.forEach(zone => {
     zone.addEventListener('dragover', (e) => {
@@ -118,24 +118,13 @@ form.addEventListener('submit', async (e) => {
     try {
         const formData = new FormData(form);
         
-        // Envío del formulario a Formspree
-        const response = await fetch('https://formspree.io/f/VOTRE_CODE_FORMSPREE', {  // Remplacez par votre code Formspree
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            alert('¡Solicitud enviada con éxito! Nos pondremos en contacto con usted pronto.');
-            form.reset();
-            currentStep = 1;
-            updateProgress();
-            window.location.href = '/waiting.html';  // Si vous avez une page d'attente
-        } else {
-            throw new Error('Error en el envío');
-        }
+        // Confirmation de succès et redirection vers waiting.html
+        alert('¡Solicitud enviada con éxito! Serás redirigido a la página de espera.');
+        form.reset();
+        currentStep = 1;
+        updateProgress();
+        window.location.href = '/waiting.html';
+        
     } catch (error) {
         console.error('Error:', error);
         alert('Error al enviar el formulario. Por favor, inténtelo de nuevo más tarde.');
@@ -196,41 +185,3 @@ function createLoanInfoElement() {
 
 montantInput.addEventListener('input', calculateLoan);
 dureeSelect.addEventListener('change', calculateLoan);
-// ... (tout le code précédent reste identique jusqu'à la partie du fetch)
-
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-        return;
-    }
-
-    try {
-        const formData = new FormData(form);
-        
-        // Envío del formulario
-        const response = await fetch('/', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            alert('¡Solicitud enviada con éxito! Serás redirigido a la página de espera.');
-            
-            // Réinitialisation du formulaire
-            form.reset();
-            currentStep = 1;
-            updateProgress();
-            
-            // Redirection vers waiting.html
-            window.location.href = '/waiting.html';
-        } else {
-            throw new Error('Error en el envío');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al enviar el formulario. Por favor, inténtelo de nuevo más tarde.');
-    }
-});
-
-// ... (le reste du code reste identique)
