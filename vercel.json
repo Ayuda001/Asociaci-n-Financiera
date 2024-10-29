@@ -1,14 +1,8 @@
 {
     "functions": {
       "api/submit-form.js": {
-        "runtime": "vercel-node@18.x"
+        "runtime": "vercel-node@14.x"
       }
-    },
-    "rewrites": [
-      {
-        "source": "/api/(.*)",
-        "destination": "/api/$1"
-      }
-    ]
+    }
   }
   

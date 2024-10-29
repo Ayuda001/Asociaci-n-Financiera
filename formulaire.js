@@ -117,13 +117,28 @@ form.addEventListener('submit', async (e) => {
 
     try {
         const formData = new FormData(form);
-        
-        // Confirmation de succès et redirection vers waiting.html
-        alert('¡Solicitud enviada con éxito! Serás redirigido a la página de espera.');
-        form.reset();
-        currentStep = 1;
-        updateProgress();
-        window.location.href = '/waiting.html';
+        const data = {};
+        formData.forEach((value, key) => (data[key] = value));
+
+        // Envoi des données au backend
+        const response = await fetch('/api/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            alert('¡Solicitud enviada con éxito! Serás redirigido a la página de espera.');
+            form.reset();
+            currentStep = 1;
+            updateProgress();
+            window.location.href = '/waiting.html';
+        } else {
+            const result = await response.json();
+            alert(`Erreur : ${result.message || 'La soumission a échoué.'}`);
+        }
         
     } catch (error) {
         console.error('Error:', error);
